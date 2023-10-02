@@ -12,7 +12,7 @@ export function LayoutAdmin() {
         { value: '/admin', label: 'Admin' },
         { value: '/admin/selling', label: 'Selling' },
         { value: '/admin/tickets-type', label: 'Tickets Type' },
-        { value: '/home', label: 'Home Page' },
+        { value: '/', label: 'Home Page' },
     ];
 
     const items = tabs.map((tab) => (
