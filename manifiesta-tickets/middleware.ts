@@ -1,18 +1,24 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import * as jose from 'jose';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     let authCookie = request.cookies.get('auth');
     if (!authCookie) {
         return returnToLogin(request);
     }
 
-    // TODO verify if the current user have the authorization
-    if (true) {
-        return NextResponse.next();
-    } else {
+    var decoded;
+    try {
+        decoded = await jose.jwtVerify(authCookie.value, new TextEncoder().encode(process.env.TOKEN));
+    } catch (e) {
+        console.log('error', e)
         return returnToLogin(request);
     }
+
+    // TODO verify if the current user have the authorization
+    // For the moment we redirect if we see error
+    return NextResponse.next();
 }
 
 function returnToLogin(request: NextRequest) {

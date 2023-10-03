@@ -14,6 +14,11 @@ export function Login() {
     function login(values: { password: string }) {
         axios.post(`${window.location.origin}/api/login`, { password: values.password }).then(d => {
             console.log('data of post', d)
+            // TODO the else, show what happen
+            if (!d.data?.error) {
+                document.cookie = `auth=${d.data?.token}`;
+                window.location.replace(`${window.location.origin}/admin`);
+            }
         });
     }
 

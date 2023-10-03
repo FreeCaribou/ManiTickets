@@ -28,6 +28,7 @@
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^7.1.0",
+    "jose": "^4.15.1",
     "jsonwebtoken": "^9.0.2",
     "next": "latest",
     "react": "latest",
