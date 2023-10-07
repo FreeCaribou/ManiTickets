@@ -16,7 +16,9 @@ export async function GET(request: Request) {
 
     (async () => {
         try {
+            console.log('we try sending mail')
             await sgMail.send(msg);
+            console.log('sending mail is ok')
         } catch (error) {
             console.log('PERKELE', process.env.NEXT_PUBLIC_SENDGRID_API_KEY)
             console.log(error);
