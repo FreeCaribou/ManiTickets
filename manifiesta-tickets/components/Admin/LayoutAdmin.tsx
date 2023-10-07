@@ -16,8 +16,8 @@ export function LayoutAdmin() {
     ];
 
     const items = tabs.map((tab) => (
-        <Tabs.Tab value={tab.value} component={Link} key={tab.value} href={tab.value}>
-            {tab.label}
+        <Tabs.Tab value={tab.value} key={tab.value}>
+            <a href={tab.value}>{tab.label}</a>
         </Tabs.Tab>
     ));
 
