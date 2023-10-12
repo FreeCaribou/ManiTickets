@@ -1,32 +1,52 @@
-// TODO protect this route
-export async function GET(request: Request) {
+import * as jose from 'jose';
+
+export async function POST(request: Request) {
     console.log('HELLO we try send mail')
 
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
-    const msg = {
-        to: process.env.TEST_MAIL,
-        from: process.env.TEST_MAIL,
-        subject: 'Sending with Twilio SendGrid is Fun',
-        text: 'and easy to do anywhere, even with Node.js',
-        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    };
+    const body = await request.json();
 
-    // sgMail.send(msg);
+    const authToken = body.authToken;
 
-    (async () => {
+    if (authToken) {
+
+        var decoded;
         try {
-            console.log('we try sending mail')
-            await sgMail.send(msg);
-            console.log('sending mail is ok')
-        } catch (error) {
-            console.log('PERKELE', process.env.NEXT_PUBLIC_SENDGRID_API_KEY)
-            console.log(error);
-            // console.log(error.response);
+            decoded = await jose.jwtVerify(authToken, new TextEncoder().encode(process.env.TOKEN));
+
+            const sgMail = require('@sendgrid/mail');
+            sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
+            const msg = {
+                to: body.email,
+                from: process.env.TEST_MAIL,
+                subject: 'Manifiesta Ticket Beta Test',
+                text: 'Manifiesta Ticket Beta Test',
+                html: '<strong>One day we will have a ticket in this mail and it would be nice</strong>',
+            };
+
+            // sgMail.send(msg);
+
+            (async () => {
+                try {
+                    console.log('we try sending mail')
+                    await sgMail.send(msg);
+                    console.log('sending mail is ok')
+                } catch (error) {
+                    console.log('PERKELE', process.env.NEXT_PUBLIC_SENDGRID_API_KEY)
+                    console.log(error);
+                    // console.log(error.response);
+                }
+            })();
+
+        } catch (e) {
+            console.log('error', e)
+            return Response.json({
+                hello: 'world - bad token but worst'
+            });
         }
-    })();
+
+    }
 
     return Response.json({
-        hello: 'world'
+        hello: 'world - bad token'
     });
 }
