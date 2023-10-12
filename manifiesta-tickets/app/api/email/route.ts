@@ -30,6 +30,10 @@ export async function POST(request: Request) {
                     console.log('we try sending mail')
                     await sgMail.send(msg);
                     console.log('sending mail is ok')
+
+                    return Response.json({
+                        hello: 'world - nice !'
+                    });
                 } catch (error) {
                     console.log('PERKELE', process.env.NEXT_PUBLIC_SENDGRID_API_KEY)
                     console.log(error);
