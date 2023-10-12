@@ -1,14 +1,10 @@
 import * as jose from 'jose';
 
 export async function POST(request: Request) {
-    console.log('HELLO we try send mail')
-
     const body = await request.json();
-
     const authToken = body.authToken;
 
     if (authToken) {
-
         var decoded;
         try {
             decoded = await jose.jwtVerify(authToken, new TextEncoder().encode(process.env.TOKEN));
@@ -23,7 +19,7 @@ export async function POST(request: Request) {
                 html: '<strong>One day we will have a ticket in this mail and it would be nice</strong>',
             };
 
-            // sgMail.send(msg);
+            sgMail.send(msg);
 
             (async () => {
                 try {
@@ -48,6 +44,9 @@ export async function POST(request: Request) {
             });
         }
 
+        return Response.json({
+            hello: 'world - good !'
+        });
     }
 
     return Response.json({
