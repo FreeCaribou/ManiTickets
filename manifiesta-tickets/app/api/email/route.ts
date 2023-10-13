@@ -3,6 +3,7 @@ import * as jose from 'jose';
 export async function POST(request: Request) {
     const body = await request.json();
     const authToken = body.authToken;
+    const uuid = body.uuid;
 
     if (authToken) {
         var decoded;
@@ -16,10 +17,10 @@ export async function POST(request: Request) {
                 from: process.env.TEST_MAIL,
                 subject: 'Manifiesta Ticket Beta Test',
                 text: 'Manifiesta Ticket Beta Test',
-                html: '<strong>One day we will have a ticket in this mail and it would be nice</strong>',
+                html: `<strong>One day we will have a ticket in this mail and it would be nice - our current ticket is <a href="${process.env.HOST_URL}my-ticket/${uuid}">there</a></strong>`,
             };
 
-            sgMail.send(msg);
+            // sgMail.send(msg);
 
             (async () => {
                 try {
