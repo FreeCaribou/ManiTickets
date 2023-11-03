@@ -1,15 +1,18 @@
 import { MyTicketUuid } from "@/components/my-ticket/my-ticket-uuid";
-import { sql } from "@vercel/postgres";
+import { MongoClient } from 'mongodb';
 
 export default async function MyTicketPage({ params }: { params: { uuid: string } }) {
-  const { rows } = await sql`SELECT * from selling_ticket_test where uuid=${params.uuid} LIMIT 1`;
+  const uri = process.env.MONGODB_URI;
+  const client = new MongoClient(uri);
+  const database = client.db(process.env.MONGODB_DB);
+  const collection = database.collection('data');
+  const result = await collection.findOne({ uuid: params.uuid });
+  delete result._id;
 
-  console.log('row ?', rows)
-
-  if (rows.length === 0) {
+  if (!result) {
     console.log('bad - dont find')
     return <div>Dont find ticket: {params.uuid} ...</div>
   }
 
-  return <MyTicketUuid row={rows[0]}/>
+  return <MyTicketUuid row={result} />
 }

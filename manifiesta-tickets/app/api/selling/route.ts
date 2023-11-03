@@ -1,6 +1,6 @@
-import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 import * as jose from 'jose';
+import { MongoClient } from 'mongodb';
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -19,19 +19,24 @@ export async function POST(request: Request) {
       uuid = 'uuid-' + dateIsoString;
       code = 'code-' + dateIsoString;
 
-      try {
-        result = await sql`INSERT INTO selling_ticket_test(uuid, code, email, created_on) VALUES (${uuid}, ${code}, ${body.email}, ${new Date().toISOString()});`;
-      } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+      const uri = process.env.MONGODB_URI;
+      const client = new MongoClient(uri);
+      const database = client.db(process.env.MONGODB_DB);
+      const collection = database.collection('data');
+      const doc = {
+        uuid,
+        code,
+        email: process.env.TEST_MAIL,
+        created_on: new Date().toISOString(),
       }
-
+      result = await collection.insertOne(doc);
     } catch (e) {
       return Response.json({
         hello: 'world - bad token but worst'
       });
     }
 
-    return NextResponse.json({ code: code, uuid: uuid }, { status: 200 });
+    return NextResponse.json({ code, uuid, result }, { status: 200 });
   }
 
   return NextResponse.json({bad: 'token'}, { status: 400 });
