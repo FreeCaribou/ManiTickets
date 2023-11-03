@@ -28,6 +28,12 @@ export function Admin() {
         return "";
     }
 
+    function test() {
+        axios.get(`${window.location.origin}/api/test`).then(r => {
+            console.log('r', r)
+        });
+    }
+
     function onSendTestMailClick() {
         axios.post(`${window.location.origin}/api/selling`, { email: testForm.values.email, authToken: getCookie('auth') }).then(sellings => {
             console.log('selling', sellings, sellings.data)
@@ -51,6 +57,7 @@ export function Admin() {
                     {...testForm.getInputProps('email')}
                 />
             </form>
+            <Button m="sm" onClick={test}>Just other test</Button>
         </>
     )
 }
