@@ -9,6 +9,8 @@ export async function POST(request: Request) {
     if (authToken) {
         let decoded;
         let result;
+        let data;
+        let allData;
         try {
             decoded = await jose.jwtVerify(authToken, new TextEncoder().encode(process.env.TOKEN));
 
@@ -22,6 +24,9 @@ export async function POST(request: Request) {
                 created_on: new Date().toISOString(),
             }
             result = await collection.insertOne(doc);
+            data = await collection.findOne({_id: result.insertedId});
+            allData = await collection.find().toArray();
+            client.close();
         } catch (e) {
             console.log('error', e)
             return Response.json({
@@ -29,7 +34,7 @@ export async function POST(request: Request) {
             });
         }
 
-        return NextResponse.json({ result }, { status: 200 });
+        return NextResponse.json({ result, data, allData }, { status: 200 });
     }
 
     return NextResponse.json({ bad: 'token' }, { status: 400 });
