@@ -30,9 +30,7 @@ export function Admin() {
 
     function onSendTestMailClick() {
         axios.post(`${window.location.origin}/api/selling`, { email: testForm.values.email, authToken: getCookie('auth') }).then(sellings => {
-            console.log('selling', sellings, sellings.data)
             axios.post(`${window.location.origin}/api/email`, { email: testForm.values.email, uuid: sellings.data.uuid, authToken: getCookie('auth') }).then(d => {
-                console.log('data of get send mail', d)
                 // TODO the else, show what happen
             });
         });

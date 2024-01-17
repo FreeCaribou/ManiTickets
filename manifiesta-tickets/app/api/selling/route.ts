@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const authToken = body.authToken;
 
   if (authToken) {
-    var decoded;
+    let decoded;
     let result;
     let code;
     let uuid;
