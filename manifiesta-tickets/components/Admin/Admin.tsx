@@ -3,8 +3,23 @@
 import { Title, Text, Button, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useForm } from '@mantine/form';
+import { ITicketsType } from '@/shared/models/tickets-type';
+import { useEffect, useState } from 'react';
 
-export function Admin() {
+export function Admin(props: { ticketsType: ITicketsType[] }) {
+
+    const [ticketsType] = useState(props.ticketsType);
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        console.log('ticketsss type', ticketsType, props)
+        setList(
+            ticketsType.map(tt =>
+                <li key={tt['_id']}>
+                    {tt.label}
+                </li>
+            ));
+    }, [ticketsType]);
 
     const testForm = useForm({
         initialValues: {
@@ -49,6 +64,7 @@ export function Admin() {
                     {...testForm.getInputProps('email')}
                 />
             </form>
+            <ul>{list}</ul>
         </>
     )
 }

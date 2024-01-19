@@ -1,7 +1,11 @@
-import { createTicketsType } from '@/shared/services/tickets-type.sevice';
+import { createTicketsTypeRoute, getAllTicketsTypeRoute } from '@/shared/services/tickets-type.sevice';
 import { lastValueFrom } from 'rxjs';
 
 export async function POST(request: Request) {
     const body = await request.json();
-    return await lastValueFrom(createTicketsType(body));
+    return await lastValueFrom(createTicketsTypeRoute(body));
+}
+
+export async function GET() {
+    return await lastValueFrom(getAllTicketsTypeRoute());
 }
