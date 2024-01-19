@@ -15,12 +15,14 @@ export function TicketsType() {
     })
 
     function onCreateNewTicketTypeClick() {
-        console.log('we create a new type of ticket', ticketTypeForm, ticketTypeForm.values, getCookie('auth'))
-        axios.post(`${window.location.origin}/api/tickets-type`, { label: ticketTypeForm.values.label, price: ticketTypeForm.values.price, authToken: getCookie('auth') }).then(d => {
+        console.log('we create a new type of ticket', ticketTypeForm, ticketTypeForm.values)
+        axios.post(`${window.location.origin}/api/tickets-type`, {
+            label: ticketTypeForm.values.label, price: ticketTypeForm.values.price, authToken: getCookie('auth')
+        }).then(d => {
             console.log('the new ticket', d)
         }).catch(e => console.log('there is an error', e.response.data));
     }
-    
+
     return (
         <>
             <Title ta="center" c="colorPrimary">Ticket type</Title>
