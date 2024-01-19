@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       const uri = process.env.MONGODB_URI;
       const client = new MongoClient(uri);
       const database = client.db(process.env.MONGODB_DB);
-      const collection = database.collection('data');
+      const collection = database.collection('command');
       const doc = {
         uuid,
         code,

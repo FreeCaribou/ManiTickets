@@ -17,9 +17,8 @@ export function TicketsType() {
     function onCreateNewTicketTypeClick() {
         console.log('we create a new type of ticket', ticketTypeForm, ticketTypeForm.values, getCookie('auth'))
         axios.post(`${window.location.origin}/api/tickets-type`, { label: ticketTypeForm.values.label, price: ticketTypeForm.values.price, authToken: getCookie('auth') }).then(d => {
-            // TODO the else, show what happen
             console.log('the new ticket', d)
-        });
+        }).catch(e => console.log('there is an error', e.response.data));
     }
     
     return (
