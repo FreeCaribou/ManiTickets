@@ -13,13 +13,21 @@ export function Admin(props: { ticketsType: ITicketsType[] }) {
 
     useEffect(() => {
         console.log('ticketsss type', ticketsType, props)
-        setList(
-            ticketsType.map(tt =>
-                <li key={tt['_id']}>
-                    {tt.label}
-                </li>
-            ));
+        setList(makeTicketsChoiceList());
     }, [ticketsType]);
+
+    function makeTicketsChoiceList() {
+        return ticketsType.map(tt =>
+            <li key={tt['_id']}>
+                <div>
+                    <div>
+                        {tt.label} {tt.price}&#x20AC;
+                    </div>
+                    <div>Here it will be a button</div>
+                </div>
+            </li>
+        )
+    }
 
     const testForm = useForm({
         initialValues: {
@@ -47,6 +55,7 @@ export function Admin(props: { ticketsType: ITicketsType[] }) {
         axios.post(`${window.location.origin}/api/selling`, { email: testForm.values.email, authToken: getCookie('auth') }).then(sellings => {
             axios.post(`${window.location.origin}/api/email`, { email: testForm.values.email, uuid: sellings.data.uuid, authToken: getCookie('auth') }).then(d => {
                 // TODO the else, show what happen
+                console.log('emai send !')
             });
         });
     }
@@ -54,17 +63,18 @@ export function Admin(props: { ticketsType: ITicketsType[] }) {
     return (
         <>
             <Title ta="center" c="colorPrimary">Admin Page</Title>
-            <Text>Hello mister admin</Text>
-            <Button m="sm" onClick={onSendTestMailClick}>Test Send Mail</Button>
+            <Text>Test mock of make tickets order</Text>
             <form>
+                <ul>{list}</ul>
                 <TextInput
                     withAsterisk
                     label="Client email"
                     placeholder="rosa@luxembourg.de"
                     {...testForm.getInputProps('email')}
                 />
+                <Button m="sm" onClick={onSendTestMailClick}>Test Buy</Button>
             </form>
-            <ul>{list}</ul>
+
         </>
     )
 }
