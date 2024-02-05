@@ -1,4 +1,4 @@
-import { LayoutAdmin } from "@/components/Admin/LayoutAdmin"
+import { LayoutAdmin } from "@/shared/components/Admin/LayoutAdmin"
 
 export default function AdminLayout({
     children, // will be a page or nested layout

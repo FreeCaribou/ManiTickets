@@ -9,8 +9,14 @@ Service to manage payment
 
 ## .env file
 MONGODB_URI=to reach the mongo db
+
 MONGODB_DB=which db to use
+
 HOST_URL=
+
 TEST_MAIL=
+
 NEXT_PUBLIC_SENDGRID_API_KEY=the key of the sendgrip service
+
 TOKEN=string token to sign jwt key
+

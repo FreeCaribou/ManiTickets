@@ -1,4 +1,4 @@
-import { MyTicketUuid } from "@/components/my-ticket/my-ticket-uuid";
+import { MyTicketUuid } from '@/shared/components/my-ticket/my-ticket-uuid';
 import { MongoClient } from 'mongodb';
 
 export default async function MyTicketPage({ params }: { params: { uuid: string } }) {
