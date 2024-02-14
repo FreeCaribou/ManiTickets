@@ -4,30 +4,11 @@ import { Title, Text, Button, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useForm } from '@mantine/form';
 import { ITicketsType } from '@/shared/models/tickets-type';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { TicketsChoiceBasket } from '../../shared-components/tickets-choice-basket';
 
 export function Admin(props: { ticketsType: ITicketsType[] }) {
-
-    const [ticketsType] = useState(props.ticketsType);
-    const [list, setList] = useState([]);
-
-    useEffect(() => {
-        console.log('ticketsss type', ticketsType, props)
-        setList(makeTicketsChoiceList());
-    }, [ticketsType]);
-
-    function makeTicketsChoiceList() {
-        return ticketsType.map(tt =>
-            <li key={tt['_id']}>
-                <div>
-                    <div>
-                        {tt.label} {tt.price}&#x20AC;
-                    </div>
-                    <div>Here it will be a button</div>
-                </div>
-            </li>
-        )
-    }
+    const [ticketsType] = useState(props.ticketsType.map(tt => { return { ...tt, unit: 0 } }));
 
     const testForm = useForm({
         initialValues: {
@@ -65,7 +46,7 @@ export function Admin(props: { ticketsType: ITicketsType[] }) {
             <Title ta="center" c="colorPrimary">Admin Page</Title>
             <Text>Test mock of make tickets order</Text>
             <form>
-                <ul>{list}</ul>
+                <TicketsChoiceBasket ticketsType={ticketsType}></TicketsChoiceBasket>
                 <TextInput
                     withAsterisk
                     label="Client email"
@@ -74,7 +55,6 @@ export function Admin(props: { ticketsType: ITicketsType[] }) {
                 />
                 <Button m="sm" onClick={onSendTestMailClick}>Test Buy</Button>
             </form>
-
         </>
     )
 }

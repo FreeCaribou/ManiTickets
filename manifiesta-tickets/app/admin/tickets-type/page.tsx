@@ -1,4 +1,4 @@
-import { TicketsType } from "@/shared/components/TicketsType/TicketsType";
+import { TicketsType } from "@/shared/components/page-components/TicketsType/TicketsType";
 
 export default function AdminTicketsTypePage() {
   return (
