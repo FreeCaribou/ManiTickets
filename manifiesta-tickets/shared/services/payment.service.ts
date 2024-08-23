@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
-import { from, Observable } from 'rxjs';
+import { NextResponse } from 'next/server';
+import { from, map, Observable } from 'rxjs';
 
 
 const uri = process.env.MONGODB_URI;
@@ -18,5 +19,9 @@ export function postPayment(body: any): Observable<any> {
         created_on: new Date().toISOString(),
     }
 
-    return from(collection.insertOne(doc));
+    return from(collection.insertOne(doc)).pipe(
+        map(r => {
+            return NextResponse.json({ r }, { status: 200 });
+        })
+    );
 }
