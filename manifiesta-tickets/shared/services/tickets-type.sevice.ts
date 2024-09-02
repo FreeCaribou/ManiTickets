@@ -1,4 +1,4 @@
-import { Observable, catchError, map, of, mergeMap, forkJoin, from } from "rxjs";
+import { Observable, catchError, map, of, mergeMap, forkJoin, from, tap } from "rxjs";
 import { NextResponse } from 'next/server';
 import { verifyJwt } from "./token.service";
 import { MongoClient } from 'mongodb';
@@ -27,15 +27,15 @@ export function ticketsTypeBodyValidator(body: any) {
 }
 
 export function getAllTicketsType(): Observable<any> {
-    return from(collection.find().toArray());
+    return from(client.connect()).pipe(
+        mergeMap(() => collection.find().toArray()),
+    );
 }
 
 // TODO protect the route ?
 export function getAllTicketsTypeRoute(): Observable<any> {
-    return from(collection.find().toArray()).pipe(
-        map(data => {
-            return NextResponse.json({ data }, { status: 200 });
-        })
+    return this.getAllTicketsType().pipe(
+        map(data => NextResponse.json({ data }, { status: 200 }))
     );
 }
 
@@ -53,23 +53,18 @@ export function createTicketsTypeRoute(body: any): Observable<any> {
     }
 
     return verifyJwt(body.authToken).pipe(
-        mergeMap(jwt => {
-            return collection.insertOne(doc);
-        }),
-
+        mergeMap(() => from(client.connect())),
+        mergeMap(() => collection.insertOne(doc)),
         mergeMap(result => {
             return forkJoin([collection.findOne({ _id: result.insertedId }), collection.find().toArray(), of(result)])
         }),
-
         map(([data, allData, result]) => {
-            client.close();
             return NextResponse.json({ data, allData, result }, { status: 200 });
         }),
-
         catchError((error) => {
             console.warn('error', error)
-            client.close();
             return of(NextResponse.json({ token: 'bad' }, { status: 400 }));
         }),
+        tap(() => client.close()),
     )
 }
