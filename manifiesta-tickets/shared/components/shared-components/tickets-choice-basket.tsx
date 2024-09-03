@@ -1,9 +1,9 @@
-import { ITicketsTypeBasket } from "@/shared/models/tickets-type";
+import { ITicketTypeBasket } from "@/shared/models/tickets-type";
 import { Badge, Button, Card, Group, Text, rem } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 
-export function TicketsChoiceBasket(props: { ticketsType: ITicketsTypeBasket[] }) {
+export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] }) {
     const [ticketsType, setTicketsType] = useState(props.ticketsType);
     const [list, setList] = useState([]);
 
@@ -37,7 +37,7 @@ export function TicketsChoiceBasket(props: { ticketsType: ITicketsTypeBasket[] }
         )
     }
 
-    function moreOfTicketType(ticketType: ITicketsTypeBasket) {
+    function moreOfTicketType(ticketType: ITicketTypeBasket) {
         const newTicketsType = [...ticketsType];
         const index = newTicketsType.findIndex(x => x.id === ticketType.id);
         if (index > -1) {
@@ -46,7 +46,7 @@ export function TicketsChoiceBasket(props: { ticketsType: ITicketsTypeBasket[] }
         }
     }
 
-    function lessOfTicketType(ticketType: ITicketsTypeBasket) {
+    function lessOfTicketType(ticketType: ITicketTypeBasket) {
         if (ticketType.unit > 0) {
             const newTicketsType = [...ticketsType];
             const index = newTicketsType.findIndex(x => x.id === ticketType.id);

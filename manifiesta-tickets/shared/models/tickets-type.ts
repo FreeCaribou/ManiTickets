@@ -1,13 +1,24 @@
-export interface ITicketsType {
+import { IEvent } from "./event";
+import { IMongoObject } from "./mongo-object";
+
+export const dbNameTicketType = 'ticket-type';
+
+export interface ITicketTypeDB extends IMongoObject {
     label: string;
     price: number;
-    
-    id?: string;
-    created_on: Date,
+    description: string;
+    image: string;
+    currency: string;
+
+    eventId: number;
+}
+
+export interface ITicketType extends ITicketTypeDB {
+    event: IEvent;
 }
 
 // Interface for the basket of selection UI
-export interface ITicketsTypeBasket extends ITicketsType {
+export interface ITicketTypeBasket extends ITicketType {
     // how many of this type is selected
     unit?: number;
 }

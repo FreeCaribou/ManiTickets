@@ -2,11 +2,12 @@ import { Observable, catchError, map, of, mergeMap, forkJoin, from, tap } from "
 import { NextResponse } from 'next/server';
 import { verifyJwt } from "./token.service";
 import { MongoClient } from 'mongodb';
+import { dbNameTicketType } from "../models/tickets-type";
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 const database = client.db(process.env.MONGODB_DB);
-const collection = database.collection('tickets-type');
+const collection = database.collection(dbNameTicketType);
 
 // TODO type and return
 export function ticketsTypeBodyValidator(body: any) {
