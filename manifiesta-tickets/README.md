@@ -1,4 +1,4 @@
-# TODO Find a good name for this project
+# Mani Tickets
 The web / admin / api part of the project
 
 ## External and paid services used
@@ -14,9 +14,15 @@ MONGODB_DB=which db to use
 
 HOST_URL=
 
-TEST_MAIL=
+TEST_MAIL 
 
-NEXT_PUBLIC_SENDGRID_API_KEY=the key of the sendgrip service
+SENDGRID_API_KEY the key of the sendgrip service
 
-TOKEN=string token to sign jwt key
+VIVA_WALLET_MERCHANT_ID
+
+VIVA_WALLET_API_KEY
+
+TOKEN string token to sign jwt key
+
+
 

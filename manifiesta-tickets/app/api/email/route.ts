@@ -11,7 +11,7 @@ export async function POST(request: Request) {
             decoded = await jose.jwtVerify(authToken, new TextEncoder().encode(process.env.TOKEN));
 
             const sgMail = require('@sendgrid/mail');
-            sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             const msg = {
                 to: body.email,
                 from: process.env.TEST_MAIL,
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
                         hello: 'world - nice !'
                     });
                 } catch (error) {
-                    console.log('PERKELE', process.env.NEXT_PUBLIC_SENDGRID_API_KEY)
+                    console.log('PERKELE', process.env.SENDGRID_API_KEY)
                     console.log(error);
                     // console.log(error.response);
                 }
