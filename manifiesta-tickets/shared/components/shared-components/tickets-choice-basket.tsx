@@ -39,7 +39,7 @@ export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] })
 
     function moreOfTicketType(ticketType: ITicketTypeBasket) {
         const newTicketsType = [...ticketsType];
-        const index = newTicketsType.findIndex(x => x.id === ticketType.id);
+        const index = newTicketsType.findIndex(x => x._id === ticketType._id);
         if (index > -1) {
             newTicketsType[index].unit++;
             setTicketsType(newTicketsType);
@@ -49,7 +49,7 @@ export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] })
     function lessOfTicketType(ticketType: ITicketTypeBasket) {
         if (ticketType.unit > 0) {
             const newTicketsType = [...ticketsType];
-            const index = newTicketsType.findIndex(x => x.id === ticketType.id);
+            const index = newTicketsType.findIndex(x => x._id === ticketType._id);
             if (index > -1) {
                 newTicketsType[index].unit--;
                 setTicketsType(newTicketsType);
