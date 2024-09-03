@@ -3,11 +3,11 @@
 import { Title, Text, Button, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useForm } from '@mantine/form';
-import { ITicketsType } from '@/shared/models/tickets-type';
+import { ITicketType } from '@/shared/models/tickets-type';
 import { useState } from 'react';
 import { TicketsChoiceBasket } from '../../shared-components/tickets-choice-basket';
 
-export function Admin(props: { ticketsType: ITicketsType[] }) {
+export function Admin(props: { ticketsType: ITicketType[] }) {
     const [ticketsType] = useState(props.ticketsType.map(tt => { return { ...tt, unit: 0 } }));
 
     const testForm = useForm({
