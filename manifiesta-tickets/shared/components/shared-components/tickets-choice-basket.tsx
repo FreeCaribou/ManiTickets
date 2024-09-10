@@ -19,7 +19,7 @@ export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] })
                 </Card.Section>
                 <Group justify="space-between" mt="md" mb="xs">
                     <Text>{tt.label}</Text>
-                    <Badge color="pink">{tt.price}&#x20AC;</Badge>
+                    <Badge color="colorSecondary">{tt.price}&#x20AC;</Badge>
                 </Group>
                 <Text size="sm" c="dimmed">
                     Here will come the ticket's description if present
