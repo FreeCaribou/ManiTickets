@@ -2,10 +2,11 @@
 
 import { Container, Tabs } from '@mantine/core';
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export function LayoutAdmin() {
-    const [active] = useState(usePathname());
+    const [active, setActive] = useState(usePathname());
+    const router = useRouter();
 
     const tabs: { value: string, label: string }[] = [
         { value: '/admin', label: 'Admin' },
@@ -16,19 +17,21 @@ export function LayoutAdmin() {
 
     const items = tabs.map((tab) => (
         <Tabs.Tab value={tab.value} key={tab.value}>
-            <a href={tab.value}>{tab.label}</a>
+            {tab.label}
         </Tabs.Tab>
     ));
 
     return (
-        <>
-            <Container>
-                <Tabs variant="outline" defaultValue={active}>
-                    <Tabs.List>
-                        {items}
-                    </Tabs.List>
-                </Tabs>
-            </Container>
-        </>
+        <Tabs
+            variant="pills"
+            value={active}
+            onChange={(value) => {
+                router.push(`${value}`);
+                setActive(value);
+            }}>
+            <Tabs.List>
+                {items}
+            </Tabs.List>
+        </Tabs>
     )
 }
