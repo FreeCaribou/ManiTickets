@@ -1,5 +1,6 @@
 import { IEvent } from "./event";
 import { IMongoObject } from "./mongo-object";
+import { IShop } from "./shop";
 import { ITicket } from "./ticket";
 
 export interface IOrderDB extends IMongoObject {
@@ -14,9 +15,11 @@ export interface IOrderDB extends IMongoObject {
 
     ticketsIds: number[];
     eventId: number;
+    shopId: number;
 }
 
 export interface IOrder extends IOrderDB {
     tickets: ITicket[];
     event: IEvent;
+    shop: IShop;
 }
