@@ -10,6 +10,7 @@ export function LayoutAdmin() {
 
     const tabs: { value: string, label: string }[] = [
         { value: '/admin', label: 'Admin' },
+        { value: '/admin/event', label: 'Event' },
         { value: '/admin/selling', label: 'Selling' },
         { value: '/admin/tickets-type', label: 'Tickets Type' },
         { value: '/', label: 'Home Page' },

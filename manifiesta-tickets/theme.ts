@@ -1,7 +1,7 @@
 'use client';
 
 import { createTheme, MantineColorsTuple } from '@mantine/core';
-
+import '@mantine/dates/styles.css';
 
 const colorPrimary: MantineColorsTuple = [
     '#21468b',
