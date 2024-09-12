@@ -1,11 +1,14 @@
 'use client'
 
-import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 export function LayoutAdmin() {
-    const [active, setActive] = useState(usePathname());
+    const pathname = usePathname();
+    useEffect(() => {
+        console.log('route change with dependency', pathname, pathname.split('/')[2]);
+    }, [pathname]);
 
     const tabs: { value: string, label: string }[] = [
         { value: '/admin', label: 'Admin' },
@@ -19,8 +22,7 @@ export function LayoutAdmin() {
         <li className="nav-item" key={tab.value}>
             <Link
                 href={tab.value}
-                className={`nav-link ${active === tab.value ? 'active' : ''}`}
-                onClick={() => setActive(tab.value)}
+                className={`nav-link ${pathname.split('/')[2] === tab.value.split('/')[2] ? 'active' : ''}`}
             >
                 {tab.label}
             </Link>

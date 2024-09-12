@@ -2,6 +2,7 @@
 
 import { AcreateNewEvent } from "@/app/actions";
 import { IEvent } from "@/shared/models/event";
+import Link from "next/link";
 
 export function AdminEvent(props: { events: IEvent[] }) {
     const createNewEvent = AcreateNewEvent.bind(null);
@@ -11,18 +12,25 @@ export function AdminEvent(props: { events: IEvent[] }) {
             <h2>Events</h2>
 
             {props.events.length > 0 ? '' : <h3>No event present</h3>}
-            {props.events.map(event => (
-                <div key={event._id.toString()} className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">{event.label}</h4>
-                        <p className="card-text">{event.beginDate.toString()} / {event.endDate.toString()}</p>
-                    </div>
+            <div className="container">
+                <div className="row">
+                    {props.events.map(event => (
+                        <div key={event._id.toString()} className="col-6">
+                            <div className="card">
+                                <div className="card-body">
+                                    <Link href={'/admin/event/' + event._id}><h4 className="card-title">{event.label}</h4></Link>
+                                    <p className="card-text">{event.beginDate.toString()} / {event.endDate.toString()}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    ))}
                 </div>
-            ))}
+            </div>
 
             <form action={createNewEvent}>
                 <h3>Create a new event</h3>
-                
+
                 <label htmlFor="label" className="form-label">Event label *</label>
                 <input type="text" className="form-control" id="label" name="label" />
 
