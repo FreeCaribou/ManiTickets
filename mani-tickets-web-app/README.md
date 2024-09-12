@@ -1,11 +1,7 @@
 # Mani Tickets
 The web / admin / api part of the project
 
-## External and paid services used
-### Sendgrip
-Service to send email
-### VivaWallet
-Service to manage payment
+
 
 ## .env file
 MONGODB_URI=to reach the mongo db

@@ -1,7 +1,8 @@
 {
   "name": "mani-tickets-web-app",
+  "description": "Managing ticketing for event or festival",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -35,7 +36,6 @@
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
     "eslint": "9.10.0",
-    "eslint-config-next": "14.2.10",
     "postcss": "^8.4.31",
     "postcss-simple-vars": "^7.0.1",
     "typescript": "5.6.2"
