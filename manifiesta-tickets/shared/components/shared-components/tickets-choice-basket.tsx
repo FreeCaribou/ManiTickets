@@ -1,7 +1,5 @@
 import { ITicketTypeBasket } from "@/shared/models/tickets-type";
-import { Badge, Button, Card, Group, Text, rem } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { IconMinus, IconPlus } from '@tabler/icons-react';
 
 export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] }) {
     const [ticketsType, setTicketsType] = useState(props.ticketsType);
@@ -13,27 +11,28 @@ export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] })
 
     function makeTicketsChoiceList() {
         return ticketsType.map((tt, key) =>
-            <Card shadow="sm" padding="lg" radius="md" withBorder key={key} mb="md">
-                <Card.Section>
-                    Here will come the ticket's picture
-                </Card.Section>
-                <Group justify="space-between" mt="md" mb="xs">
-                    <Text>{tt.label}</Text>
-                    <Badge color="colorSecondary">{tt.price}&#x20AC;</Badge>
-                </Group>
-                <Text size="sm" c="dimmed">
-                    Here will come the ticket's description if present
-                </Text>
-                <Group justify="space-between" mt="md" mb="xs">
-                    <Button variant="filled" onClick={() => lessOfTicketType(tt)} disabled={tt.unit === 0}>
-                        <IconMinus size={48} />
-                    </Button>
-                    <Text>{tt.unit} unit(s) choosen</Text>
-                    <Button variant="filled" onClick={() => moreOfTicketType(tt)}>
-                        <IconPlus size={48} />
-                    </Button>
-                </Group>
-            </Card>
+            // <Card shadow="sm" padding="lg" radius="md" withBorder key={key} mb="md">
+            //     <Card.Section>
+            //         Here will come the ticket's picture
+            //     </Card.Section>
+            //     <Group justify="space-between" mt="md" mb="xs">
+            //         <Text>{tt.label}</Text>
+            //         <Badge color="colorSecondary">{tt.price}&#x20AC;</Badge>
+            //     </Group>
+            //     <Text size="sm" c="dimmed">
+            //         Here will come the ticket's description if present
+            //     </Text>
+            //     <Group justify="space-between" mt="md" mb="xs">
+            //         <Button variant="filled" onClick={() => lessOfTicketType(tt)} disabled={tt.unit === 0}>
+            //             <IconMinus size={48} />
+            //         </Button>
+            //         <Text>{tt.unit} unit(s) choosen</Text>
+            //         <Button variant="filled" onClick={() => moreOfTicketType(tt)}>
+            //             <IconPlus size={48} />
+            //         </Button>
+            //     </Group>
+            // </Card>
+            <p>Will come back later</p>
         )
     }
 

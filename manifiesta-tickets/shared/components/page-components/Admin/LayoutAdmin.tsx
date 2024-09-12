@@ -1,12 +1,11 @@
 'use client'
 
-import { Container, Tabs } from '@mantine/core';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export function LayoutAdmin() {
     const [active, setActive] = useState(usePathname());
-    const router = useRouter();
 
     const tabs: { value: string, label: string }[] = [
         { value: '/admin', label: 'Admin' },
@@ -17,22 +16,29 @@ export function LayoutAdmin() {
     ];
 
     const items = tabs.map((tab) => (
-        <Tabs.Tab value={tab.value} key={tab.value}>
-            {tab.label}
-        </Tabs.Tab>
+        <li className="nav-item" key={tab.value}>
+            <Link
+                href={tab.value}
+                className={`nav-link ${active === tab.value ? 'active' : ''}`}
+                onClick={() => setActive(tab.value)}
+            >
+                {tab.label}
+            </Link>
+        </li>
     ));
 
     return (
-        <Tabs
-            variant="pills"
-            value={active}
-            onChange={(value) => {
-                router.push(`${value}`);
-                setActive(value);
-            }}>
-            <Tabs.List>
-                {items}
-            </Tabs.List>
-        </Tabs>
+        <nav className='navbar navbar-expand-md'>
+            <div className='container-fluid'>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse d-md-flex" id="navbarSupportedContent">
+                    <ul className='navbar-nav me-auto mb-2 mb-md-0'>{items}</ul>
+                </div>
+            </div>
+        </nav>
     )
 }

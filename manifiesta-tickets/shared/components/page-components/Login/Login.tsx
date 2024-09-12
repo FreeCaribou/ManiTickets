@@ -1,18 +1,13 @@
 'use client'
 
-import { Title, Button, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
 import axios from 'axios';
+import { useState } from 'react';
 
 export function Login() {
-    const loginForm = useForm({
-        initialValues: {
-            password: '',
-        }
-    })
+    const [loginFormPassword, setLoginFormPassword] = useState('');
 
-    function login(values: { password: string }) {
-        axios.post(`${window.location.origin}/api/login`, { password: values.password }).then(d => {
+    function login() {
+        axios.post(`${window.location.origin}/api/login`, { password: loginFormPassword }).then(d => {
             console.log('data of post', d)
             // TODO the else, show what happen
             if (!d.data?.error) {
@@ -24,15 +19,16 @@ export function Login() {
 
     return (
         <>
-            <Title ta="center" c="colorPrimary">Login Page</Title>
-            <form onSubmit={loginForm.onSubmit((values: { password: string }) => login(values))}>
-                <TextInput
-                    withAsterisk
-                    label="Password"
+            <h2>Login Page</h2>
+            <form action={login}>
+            <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+                <input
+                    className='form-control'
+                    type="password"
                     placeholder="azerty0123"
-                    {...loginForm.getInputProps('password')}
+                    onChange={e => setLoginFormPassword(e.target.value)}
                 />
-                <Button type="submit">Login</Button>
+                <button type="submit" className='btn btn-primary'>Login</button>
             </form>
         </>
     )

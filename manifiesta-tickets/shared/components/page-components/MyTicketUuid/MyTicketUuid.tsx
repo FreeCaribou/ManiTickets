@@ -1,6 +1,5 @@
 'use client'
 
-import { Text, Button } from '@mantine/core';
 import { Template, generate, BLANK_PDF } from '@pdfme/generator';
 
 export function MyTicketUuid({ row }) {
@@ -55,8 +54,8 @@ export function MyTicketUuid({ row }) {
 
   return (
     <>
-      <Text>My ticket: {row.code}</Text>
-      <Button m="sm" onClick={onCreatePdfClick}>Download my ticket</Button>
+      <h2>My ticket: {row.code}</h2>
+      <button type="button" onClick={onCreatePdfClick}>Download my ticket</button>
     </>
   )
 }

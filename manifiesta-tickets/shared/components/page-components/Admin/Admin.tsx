@@ -1,20 +1,6 @@
 'use client'
 
-import { Title, Text, Button, TextInput } from '@mantine/core';
-import axios from 'axios';
-import { useForm } from '@mantine/form';
-import { ITicketType } from '@/shared/models/tickets-type';
-import { useState } from 'react';
-import { TicketsChoiceBasket } from '../../shared-components/tickets-choice-basket';
-
-export function Admin(props: { ticketsType: ITicketType[] }) {
-    const [ticketsType] = useState(props.ticketsType.map(tt => { return { ...tt, unit: 0 } }));
-
-    const testForm = useForm({
-        initialValues: {
-            email: '',
-        }
-    })
+export function Admin() {
 
     function getCookie(cname) {
         let name = cname + "=";
@@ -32,29 +18,9 @@ export function Admin(props: { ticketsType: ITicketType[] }) {
         return "";
     }
 
-    function onSendTestMailClick() {
-        axios.post(`${window.location.origin}/api/selling`, { email: testForm.values.email, authToken: getCookie('auth') }).then(sellings => {
-            axios.post(`${window.location.origin}/api/email`, { email: testForm.values.email, uuid: sellings.data.uuid, authToken: getCookie('auth') }).then(d => {
-                // TODO the else, show what happen
-                console.log('emai send !')
-            });
-        });
-    }
-
     return (
         <>
-            <Title ta="center" c="colorPrimary">Admin Page</Title>
-            <Text>Test mock of make tickets order</Text>
-            <form>
-                <TicketsChoiceBasket ticketsType={ticketsType}></TicketsChoiceBasket>
-                <TextInput
-                    withAsterisk
-                    label="Client email"
-                    placeholder="rosa@luxembourg.de"
-                    {...testForm.getInputProps('email')}
-                />
-                <Button m="sm" onClick={onSendTestMailClick}>Test Buy</Button>
-            </form>
+           Hell World Admin Page
         </>
     )
 }
