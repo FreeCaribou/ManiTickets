@@ -15,11 +15,12 @@ export function AdminEvent(props: { events: IEvent[] }) {
             <div className="container">
                 <div className="row">
                     {props.events.map(event => (
-                        <div key={event._id.toString()} className="col-6">
+                        <div key={event._id.toString()} className="col-4">
                             <div className="card">
                                 <div className="card-body">
-                                    <Link href={'/admin/event/' + event._id}><h4 className="card-title">{event.label}</h4></Link>
-                                    <p className="card-text">{event.beginDate.toString()} / {event.endDate.toString()}</p>
+                                    <Link href={'/admin/event/' + event._id}>
+                                        <h4 className="card-title">{event.label}</h4>
+                                    </Link>
                                 </div>
                             </div>
 
@@ -40,7 +41,9 @@ export function AdminEvent(props: { events: IEvent[] }) {
                 <label htmlFor="endDate">End date *</label>
                 <input id="endDate" name="endDate" className="form-control" type="datetime-local" />
 
-                <button className="btn btn-primary" type="submit">Create new event <i className="bi bi-plus-circle"></i></button>
+                <button className="btn btn-primary mt-5" type="submit">
+                    Create new event <i className="bi bi-plus-circle" />
+                </button>
             </form>
         </div>
     )

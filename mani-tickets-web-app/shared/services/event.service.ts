@@ -21,7 +21,6 @@ export function getOneEvent(id: string): Observable<IEvent> {
     return from(client.connect()).pipe(
         mergeMap(() => collection.findOne({ _id: new ObjectId(id) })),
         map((data: WithId<IEvent>) => convertId(data)),
-        tap(() => client.close()),
     );
 }
 

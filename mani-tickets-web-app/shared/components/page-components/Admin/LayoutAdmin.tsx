@@ -1,20 +1,16 @@
 'use client'
 
-import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 export function LayoutAdmin() {
     const pathname = usePathname();
-    useEffect(() => {
-        console.log('route change with dependency', pathname, pathname.split('/')[2]);
-    }, [pathname]);
 
     const tabs: { value: string, label: string }[] = [
         { value: '/admin', label: 'Admin' },
         { value: '/admin/event', label: 'Event' },
         { value: '/admin/selling', label: 'Selling' },
-        { value: '/admin/tickets-type', label: 'Tickets Type' },
+        { value: '/admin/ticket-type', label: 'Ticket Type' },
         { value: '/', label: 'Home Page' },
     ];
 

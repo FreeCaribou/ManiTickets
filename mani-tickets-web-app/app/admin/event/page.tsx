@@ -3,7 +3,7 @@ import { IEvent } from "@/shared/models/event"
 import { getAllEvents } from "@/shared/services/event.service"
 import { lastValueFrom } from "rxjs";
 
-export default async function AdminEventPage() {
+export default async function Page() {
 
     const events: IEvent[] = await lastValueFrom(getAllEvents());
  

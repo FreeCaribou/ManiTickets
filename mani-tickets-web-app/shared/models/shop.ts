@@ -1,6 +1,6 @@
 import { IEvent } from "./event";
 import { IMongoObject } from "./mongo-object";
-import { ITicketType } from "./tickets-type";
+import { ITicketType } from "./ticket-type";
 
 export interface IShopDB extends IMongoObject {
     label: string;
