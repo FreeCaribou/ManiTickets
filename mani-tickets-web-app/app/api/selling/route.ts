@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       code = 'code-' + dateIsoString;
 
       const uri = process.env.MONGODB_URI;
-      const client = new MongoClient(uri, { useUnifiedTopology: true}, { useNewUrlParser: true }, { connectTimeoutMS: 30000 }, { keepAlive: 1});
+      const client = new MongoClient(uri, {useUnifiedTopology: true, useNewUrlParser: true});
       const database = client.db(process.env.MONGODB_DB);
       const collection = database.collection('command');
       const doc = {
