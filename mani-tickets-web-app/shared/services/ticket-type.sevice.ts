@@ -8,7 +8,7 @@ import { convertId } from "../models/mongo-object";
 import { getOneEvent } from "./event.service";
 
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, {useUnifiedTopology: true, useNewUrlParser: true});
+const client = new MongoClient(uri);
 const database = client.db(process.env.MONGODB_DB);
 const collection = database.collection(dbNameTicketType);
 

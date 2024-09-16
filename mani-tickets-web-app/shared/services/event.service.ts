@@ -5,7 +5,7 @@ import { IError } from "../models/error";
 import { convertId } from "../models/mongo-object";
 
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, {useUnifiedTopology: true, useNewUrlParser: true});
+const client = new MongoClient(uri);
 const database = client.db(process.env.MONGODB_DB);
 const collection = database.collection(dbNameEvent);
 
