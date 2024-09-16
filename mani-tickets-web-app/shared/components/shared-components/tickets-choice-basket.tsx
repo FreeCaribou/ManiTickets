@@ -1,4 +1,4 @@
-import { ITicketTypeBasket } from "@/shared/models/tickets-type";
+import { ITicketTypeBasket } from "@/shared/models/ticket-type";
 import { useEffect, useState } from "react";
 
 export function TicketsChoiceBasket(props: { ticketsType: ITicketTypeBasket[] }) {
