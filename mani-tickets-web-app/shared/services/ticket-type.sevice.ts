@@ -17,7 +17,6 @@ export function getAllTicketTypes(): Observable<ITicketType[]> {
         mergeMap(() => collection.find().toArray()),
         map((data: WithId<ITicketType>[]) => data.map(d => convertId(d))),
         mergeMap((ticketTypes: ITicketType[]) => forkJoin(ticketTypes.map(tt => linkEventToTicketType(tt)))),
-        tap(() => client.close()),
     );
 }
 
@@ -42,7 +41,6 @@ export function createOneTicketType(body: any): Observable<ITicketType> {
         mergeMap(() => collection.insertOne(body)),
         mergeMap(result => collection.findOne({ _id: result.insertedId })),
         map((data: WithId<ITicketType>) => data),
-        tap(() => client.close()),
     );
 }
 
@@ -79,6 +77,5 @@ export function createTicketTypeRoute(body: any): Observable<any> {
             console.warn('error', error)
             return of(NextResponse.json({ token: 'bad' }, { status: 400 }));
         }),
-        tap(() => client.close()),
     )
 }

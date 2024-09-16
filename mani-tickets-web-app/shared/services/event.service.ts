@@ -13,7 +13,6 @@ export function getAllEvents(): Observable<IEvent[]> {
     return from(client.connect()).pipe(
         mergeMap(() => collection.find().toArray()),
         map((data: WithId<IEvent>[]) => data.map(d => convertId(d))),
-        tap(() => client.close()),
     );
 }
 
@@ -34,6 +33,5 @@ export function createOneEvent(body: any): Observable<IEvent> {
         mergeMap(() => collection.insertOne(body)),
         mergeMap(result => collection.findOne({ _id: result.insertedId })),
         map((data: WithId<IEvent>) => data),
-        tap(() => client.close()),
     );
 }
