@@ -12,11 +12,19 @@ const client = new MongoClient(uri);
 const database = client.db(process.env.MONGODB_DB);
 const collection = database.collection(dbNameTicketType);
 
-export function getAllTicketTypes(): Observable<ITicketType[]> {
+export function getAllTicketTypesImpl(): Observable<ITicketType[]> {
     return from(client.connect()).pipe(
-        mergeMap(() => collection.find().toArray()),
+        mergeMap(() => getAllTicketTypes()),
+        tap(() => client.close()),
+    );
+}
+
+export function getAllTicketTypes(): Observable<ITicketType[]> {
+    return from(collection.find().toArray()).pipe(
         map((data: WithId<ITicketType>[]) => data.map(d => convertId(d))),
-        mergeMap((ticketTypes: ITicketType[]) => forkJoin(ticketTypes.map(tt => linkEventToTicketType(tt)))),
+        mergeMap((ticketTypes: ITicketType[]) => 
+            ticketTypes.length > 0 ? forkJoin(ticketTypes.map(tt => linkEventToTicketType(tt))) : of([])
+        ),
     );
 }
 
