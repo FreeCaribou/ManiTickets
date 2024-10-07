@@ -1,5 +1,5 @@
 import * as jose from 'jose';
-import { Observable, of, from, catchError } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 // TODO try to manage error message here
 export function verifyJwt(token): Observable<any> {

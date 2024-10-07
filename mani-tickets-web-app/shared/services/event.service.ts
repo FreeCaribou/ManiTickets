@@ -9,28 +9,17 @@ const client = new MongoClient(uri);
 const database = client.db(process.env.MONGODB_DB);
 const collection = database.collection(dbNameEvent);
 
-export function getAllEventsImpl(): Observable<IEvent[]> {
-    return from(client.connect()).pipe(
-        mergeMap(() => getAllEvents()),
-        tap(() => client.close()),
-    );
-}
-
 export function getAllEvents(): Observable<IEvent[]> {
-    return from(collection.find().toArray()).pipe(
-        map((data: WithId<IEvent>[]) => data.map(d => convertId(d))),
-    );
-}
-
-export function getOneEventImpl(id: string): Observable<IEvent> {
     return from(client.connect()).pipe(
-        mergeMap(() => getOneEvent(id)),
+        mergeMap(() => collection.find().toArray()),
+        map((data: WithId<IEvent>[]) => data.map(d => convertId(d))),
         tap(() => client.close()),
     );
 }
 
 export function getOneEvent(id: string): Observable<IEvent> {
-    return from(collection.findOne({ _id: new ObjectId(id) })).pipe(
+    return from(client.connect()).pipe(
+        mergeMap(() => collection.findOne({ _id: new ObjectId(id) })),
         map((data: WithId<IEvent>) => convertId(data)),
     );
 }

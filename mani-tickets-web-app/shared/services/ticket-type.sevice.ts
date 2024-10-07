@@ -1,40 +1,36 @@
 import { Observable, catchError, map, of, mergeMap, forkJoin, from, tap } from "rxjs";
 import { NextResponse } from 'next/server';
 import { verifyJwt } from "./token.service";
-import { MongoClient, WithId } from 'mongodb';
+import { MongoClient, ObjectId, WithId } from 'mongodb';
 import { dbNameTicketType, ITicketType, ticketTypeBodyValidator } from "../models/ticket-type";
 import { IError } from "../models/error";
 import { convertId } from "../models/mongo-object";
 import { getOneEvent } from "./event.service";
+import { dbNameEvent } from "../models/event";
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 const database = client.db(process.env.MONGODB_DB);
 const collection = database.collection(dbNameTicketType);
+const collectionEvent = database.collection(dbNameEvent);
 
-export function getAllTicketTypesImpl(): Observable<ITicketType[]> {
+export function getAllTicketTypes(): Observable<ITicketType[]> {
     return from(client.connect()).pipe(
-        mergeMap(() => getAllTicketTypes()),
+        mergeMap(() => collection.find().toArray()),
+        map((data: WithId<ITicketType>[]) => data.map(d => convertId(d))),
+        mergeMap((ticketTypes: ITicketType[]) => 
+            ticketTypes.length > 0 ? forkJoin(ticketTypes.map(tt => linkEventToTicketType(tt))) : of([])),
         tap(() => client.close()),
     );
 }
 
-export function getAllTicketTypes(): Observable<ITicketType[]> {
-    return from(collection.find().toArray()).pipe(
-        map((data: WithId<ITicketType>[]) => data.map(d => convertId(d))),
-        mergeMap((ticketTypes: ITicketType[]) => 
-            ticketTypes.length > 0 ? forkJoin(ticketTypes.map(tt => linkEventToTicketType(tt))) : of([])
-        ),
-    );
-}
-
 function linkEventToTicketType(ticketType: ITicketType): Observable<ITicketType> {
-    return getOneEvent(ticketType.eventId.toString()).pipe(
+    return from(collection.findOne({ _id: new ObjectId(ticketType.eventId.toString()) })).pipe(
         map(event => {
             return {
                 ...ticketType,
                 event
-            }
+            } as ITicketType
         })
     )
 }
