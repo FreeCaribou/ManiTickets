@@ -20,12 +20,11 @@ export function getAllTicketTypes(): Observable<ITicketType[]> {
         map((data: WithId<ITicketType>[]) => data.map(d => convertId(d))),
         mergeMap((ticketTypes: ITicketType[]) => 
             ticketTypes.length > 0 ? forkJoin(ticketTypes.map(tt => linkEventToTicketType(tt))) : of([])),
-        tap(() => client.close()),
     );
 }
 
 function linkEventToTicketType(ticketType: ITicketType): Observable<ITicketType> {
-    return from(collection.findOne({ _id: new ObjectId(ticketType.eventId.toString()) })).pipe(
+    return from(collectionEvent.findOne({ _id: new ObjectId(ticketType.eventId.toString()) })).pipe(
         map(event => {
             return {
                 ...ticketType,

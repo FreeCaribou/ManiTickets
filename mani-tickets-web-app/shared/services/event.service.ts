@@ -13,7 +13,6 @@ export function getAllEvents(): Observable<IEvent[]> {
     return from(client.connect()).pipe(
         mergeMap(() => collection.find().toArray()),
         map((data: WithId<IEvent>[]) => data.map(d => convertId(d))),
-        tap(() => client.close()),
     );
 }
 
